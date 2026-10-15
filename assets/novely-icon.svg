@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>Novely</title>
+  <desc>An open book, one idea spark, and an N on a bookmark, on an indigo-violet field.</desc>
+  <defs>
+    <linearGradient id="indigo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4935b1"/>
+      <stop offset="100%" stop-color="#8964df"/>
+    </linearGradient>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="184" fill="url(#indigo)"/>
+  <path d="M220 401v326c96-28 187-9 275 25m309-351v326c-96-28-187-9-275 25" fill="none" stroke="#ffffff" stroke-opacity=".48" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M244 369c82-25 169-11 251 40v301c-82-43-169-47-251-22Z" fill="#ffffff"/>
+  <path d="M529 409c82-51 169-65 251-40v319c-82-25-169-21-251 22Z" fill="#ffffff"/>
+  <path d="M446 522h132v219l-66-39-66 39Z" fill="#4935b1"/>
+  <path d="M469 644v-9h11v-76l-12-14v-9h26l48 67v-58h-12v-9h36v9h-11v101h-12l-51-73v62h12v9Z" fill="#ffffff"/>
+  <path d="M726 223c6 42 14 50 56 56-42 6-50 14-56 56-6-42-14-50-56-56 42-6 50-14 56-56Z" fill="#ffffff"/>
+</svg>
