@@ -287,8 +287,8 @@
   const cover = document.getElementById('cover-title');
   title?.addEventListener('input', () => { cover.textContent = title.value.trim() || 'Your book'; });
 
-  // Downloads always point at the newest published release. Without JavaScript (or before the
-  // lookup returns) the links open the latest release page, which GitHub keeps current.
+  // Download buttons link straight to the newest Novely.dmg (GitHub's latest-release download URL),
+  // so they work without JavaScript. The lookup only pins the exact file and shows the version.
   const RELEASES = 'https://api.github.com/repos/Novly-Story/releases/releases/latest';
   fetch(RELEASES, { headers: { Accept: 'application/vnd.github+json' } })
     .then((response) => (response.ok ? response.json() : Promise.reject(response.status)))
