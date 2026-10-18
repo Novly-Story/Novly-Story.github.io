@@ -286,4 +286,24 @@
   const title = document.getElementById('title-input');
   const cover = document.getElementById('cover-title');
   title?.addEventListener('input', () => { cover.textContent = title.value.trim() || 'Your book'; });
+
+  // Downloads always point at the newest published release. Without JavaScript (or before the
+  // lookup returns) the links open the latest release page, which GitHub keeps current.
+  const RELEASES = 'https://api.github.com/repos/Novly-Story/releases/releases/latest';
+  fetch(RELEASES, { headers: { Accept: 'application/vnd.github+json' } })
+    .then((response) => (response.ok ? response.json() : Promise.reject(response.status)))
+    .then((release) => {
+      const dmg = (release.assets || []).find((asset) => asset.name === 'Novely.dmg')
+        || (release.assets || []).find((asset) => asset.name.endsWith('.dmg'));
+      const version = (release.tag_name || '').replace(/^v/, '');
+      if (dmg) {
+        document.querySelectorAll('a[data-download]').forEach((link) => { link.href = dmg.browser_download_url; });
+        document.querySelectorAll('form[data-download]').forEach((form) => {
+          form.addEventListener('submit', (event) => { event.preventDefault(); window.location.href = dmg.browser_download_url; });
+        });
+      }
+      if (release.html_url) document.querySelectorAll('[data-release-page]').forEach((link) => { link.href = release.html_url; });
+      if (version) document.querySelectorAll('[data-release-version]').forEach((label) => { label.textContent = ` \u00b7 v${version}`; });
+    })
+    .catch(() => {});
 })();
