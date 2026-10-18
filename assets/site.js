@@ -1,205 +1,289 @@
+// Novely website: reveals, the live manuscript, the Continue control, the index cards, the cover.
 (() => {
-  'use strict';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const reveals = [...document.querySelectorAll('[data-reveal]')];
-  let observer;
-
-  function showAll() {
-    document.documentElement.classList.remove('motion-ready');
-    reveals.forEach(element => element.classList.add('is-visible'));
-    observer?.disconnect();
+  // Reveal once as each part enters; nothing stays hidden if the observer never fires.
+  const targets = document.querySelectorAll('[data-reveal], [data-shutter]');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      }
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+    targets.forEach((el) => io.observe(el));
+    window.addEventListener('load', () => setTimeout(() => {
+      targets.forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < innerHeight && r.bottom > 0) el.classList.add('is-in'); });
+    }, 2500));
+  } else {
+    targets.forEach((el) => el.classList.add('is-in'));
   }
 
-  if (!motion.matches && 'IntersectionObserver' in window) {
-    observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
 
-    document.querySelectorAll('.section-heading, .writing-copy, .writing-details, .ai-copy, .possibility-list, .question-list, .footer-top').forEach(group => {
-      [...group.children].forEach((element, index) => {
-        if (element.matches('[data-reveal]')) element.style.setProperty('--delay', `${Math.min(index, 3) * 75}ms`);
+  // Hero carousel: four moments of Novely, advancing on their own with a ribbon progress tab.
+  (() => {
+    const stage = document.querySelector('.stage');
+    const slides = [...document.querySelectorAll('.slide')];
+    const tabs = [...document.querySelectorAll('.slide-tab')];
+    const tabBar = document.querySelector('.slide-tabs');
+    if (!stage || slides.length < 2) return;
+    const time = 7000;
+    let index = 0;
+    let timer = null;
+    let paused = false;
+    const typed = document.getElementById('ai-typed');
+    const aiText = 'Ivo leaned closer. “That isn’t a star,” he said. “It’s a door.” Mara pressed her thumb to the ink. It was still wet.';
+    let aiTimer = null;
+
+    function typeAI() {
+      clearInterval(aiTimer);
+      if (!typed) return;
+      if (reduce) { typed.textContent = aiText; return; }
+      let i = 0;
+      typed.textContent = '';
+      aiTimer = setInterval(() => {
+        i += Math.max(1, Math.round(Math.random() * 3));
+        typed.textContent = aiText.slice(0, i);
+        if (i >= aiText.length) clearInterval(aiTimer);
+      }, 38);
+    }
+
+    function show(next, user = false) {
+      next = (next + slides.length) % slides.length;
+      if (next === index && !user) return;
+      const previous = slides[index];
+      slides.forEach((slide) => slide.classList.remove('is-first'));
+      if (next !== index) {
+        previous.classList.remove('is-active');
+        previous.classList.add('is-leaving');
+        previous.setAttribute('aria-hidden', 'true');
+        setTimeout(() => previous.classList.remove('is-leaving'), 720);
+      }
+      slides[next].classList.add('is-active');
+      slides[next].removeAttribute('aria-hidden');
+      tabs.forEach((tab, i) => {
+        tab.classList.toggle('is-active', i === next);
+        tab.classList.toggle('is-done', i < next);
+        tab.setAttribute('aria-selected', String(i === next));
+        // restart the progress fill
+        const fill = tab.querySelector('.slide-tab__fill');
+        fill.style.animation = 'none';
+        void fill.offsetWidth;
+        fill.style.animation = '';
       });
+      index = next;
+      if (slides[index].id === 'slide-1') typeAI();
+      schedule();
+    }
+
+    function schedule() {
+      clearTimeout(timer);
+      if (reduce || paused) return;
+      timer = setTimeout(() => show(index + 1), time);
+    }
+
+    function setPaused(value) {
+      paused = value;
+      tabBar.classList.toggle('is-paused', value);
+      if (value) clearTimeout(timer); else schedule();
+    }
+
+    slides[0].classList.add('is-first');
+    tabs.forEach((tab) => tab.addEventListener('click', () => show(Number(tab.dataset.go), true)));
+    tabBar.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      event.preventDefault();
+      show(index + (event.key === 'ArrowRight' ? 1 : -1), true);
+      tabs[index].focus();
     });
-    reveals.forEach(element => observer.observe(element));
-    document.documentElement.classList.add('motion-ready');
+    // Pause while the visitor is reading, hovering or typing; resume when they leave.
+    stage.addEventListener('pointerenter', () => setPaused(true));
+    stage.addEventListener('pointerleave', () => { if (!stage.contains(document.activeElement)) setPaused(false); });
+    stage.addEventListener('focusin', () => setPaused(true));
+    stage.addEventListener('focusout', () => setTimeout(() => { if (!stage.contains(document.activeElement) && !stage.matches(':hover')) setPaused(false); }, 0));
+    document.addEventListener('visibilitychange', () => setPaused(document.hidden));
+    // Swipe on touch screens.
+    let startX = null;
+    stage.addEventListener('touchstart', (event) => { startX = event.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', (event) => {
+      if (startX === null) return;
+      const dx = event.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50 && document.activeElement?.id !== 'manuscript') show(index + (dx < 0 ? 1 : -1), true);
+      startX = null;
+    });
+    // A slight tilt toward the pointer.
+    const deck = document.getElementById('slides');
+    if (!reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      stage.addEventListener('pointermove', (event) => {
+        const box = stage.getBoundingClientRect();
+        const x = (event.clientX - box.left) / box.width - 0.5;
+        const y = (event.clientY - box.top) / box.height - 0.5;
+        deck.style.transform = `translate(${(x * -14).toFixed(1)}px, ${(y * -10).toFixed(1)}px)`;
+      });
+      stage.addEventListener('pointerleave', () => { deck.style.transform = ''; });
+    }
+    schedule();
+  })();
+
+  // The live manuscript: names light up as you type, like Novely's preview.
+  const cast = [
+    { name: 'Mara Venn', short: 'Mara', kind: 'Character', detail: 'Protagonist', colour: '#f59e0b' },
+    { name: 'Ivo Bell', short: 'Ivo', kind: 'Character', detail: 'Mentor', colour: '#8b5cf6' }, // taste-skill-ignore: the character's colour in the app
+    { name: 'The Observatory', kind: 'Location', detail: 'Location', colour: '#10b981' },
+    { name: 'Bellweather Bay', kind: 'Location', detail: 'Location', colour: '#3b82f6' },
+  ];
+  const commands = [
+    { label: 'Continue with AI', detail: 'Write what happens next', run: () => continueStory(true) },
+    { label: 'Heading', detail: 'Turn into a heading', run: () => {} },
+    { label: 'Quote', detail: 'Turn into a quote', run: () => {} },
+    { label: 'Scene break', detail: 'Insert * * *', run: () => insertAtCaret('\n\n* * *\n\n') },
+  ];
+  const input = document.getElementById('manuscript');
+  const mirror = document.getElementById('mirror');
+  const mentions = document.getElementById('mentions');
+  const words = document.getElementById('live-words');
+  const menu = document.getElementById('menu');
+  const escape = (text) => text.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const names = cast.flatMap((c) => [c.name, c.short].filter(Boolean).map((n) => ({ n, c })))
+    .sort((a, b) => b.n.length - a.n.length);
+  const pattern = new RegExp(`(?<![\\p{L}\\p{N}])(${names.map(({ n }) => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})(?:['’]s)?(?![\\p{L}\\p{N}])`, 'giu');
+
+  function render() {
+    if (!input) return;
+    const text = input.value;
+    const counts = new Map();
+    let html = '';
+    let last = 0;
+    for (const match of text.matchAll(pattern)) {
+      const found = names.find(({ n }) => n.toLowerCase() === match[1].toLowerCase());
+      if (!found) continue;
+      counts.set(found.c, (counts.get(found.c) || 0) + 1);
+      html += escape(text.slice(last, match.index)) + `<mark style="--c:${found.c.colour}">${escape(match[0])}</mark>`;
+      last = match.index + match[0].length;
+    }
+    html += escape(text.slice(last)) + '\n';
+    mirror.innerHTML = html;
+    input.style.height = mirror.offsetHeight + 'px';
+    words.textContent = (text.match(/\S+/g) || []).length;
+    mentions.innerHTML = [...counts].map(([c, n]) => `<span style="--c:${c.colour}">${escape(c.short || c.name)} <b>×${n}</b></span>`).join('');
   }
 
-  // A real screenshot, not an invented demo: let the visitor explore its three areas.
-  const descriptions = {
-    manuscript: 'A clear page, chapter by chapter. Format your draft, highlight a passage and keep writing as pages break automatically.',
-    world: 'The story around the story. Navigate chapters and keep characters, locations and the details of your world within reach.',
-    assistant: 'Help when you ask for it. The assistant sees your active chapter, cast and locations, so the next suggestion belongs to your book.'
-  };
-  const image = document.querySelector('.explorer-image');
-  const description = document.querySelector('#view-description');
-  const controls = [...document.querySelectorAll('[data-view]')];
-
-  controls.forEach(button => button.addEventListener('click', () => {
-    const view = button.dataset.view;
-    if (!Object.hasOwn(descriptions, view)) return;
-    controls.forEach(control => control.setAttribute('aria-pressed', String(control === button)));
-    image.dataset.focus = view;
-    description.textContent = descriptions[view];
-  }));
-  document.documentElement.classList.add('interactive');
-
-  // A chaptered hero: real features, with visitor-controlled and accessible playback.
-  const carousel = document.querySelector('.feature-carousel');
-  const slides = [...carousel.querySelectorAll('[data-slide]')];
-  const chapters = [...carousel.querySelectorAll('[data-feature]')];
-  const pauseButton = carousel.querySelector('[data-carousel="pause"]');
-  const stage = carousel.querySelector('.feature-slides');
-  const status = carousel.querySelector('.carousel-status');
-  const duration = 6500;
-  let activeSlide = 0;
-  let userPaused = motion.matches;
-  let inView = true;
-  let hovering = false;
-  let timer = null;
-  let startedAt = 0;
-  let remaining = duration;
-
-  function stopTimer() {
-    if (timer === null) return;
-    clearTimeout(timer);
-    timer = null;
-    remaining = Math.max(0, remaining - (performance.now() - startedAt));
+  // "@" names and "/" commands, from the word before the caret.
+  let menuState = null;
+  function updateMenu() {
+    const before = input.value.slice(0, input.selectionStart);
+    const match = before.match(/(^|\s)([@/])([^\s@/]{0,20})$/);
+    if (!match || input.selectionStart !== input.selectionEnd) return closeMenu();
+    const [, , trigger, query] = match;
+    const q = query.toLowerCase();
+    const items = trigger === '@'
+      ? cast.filter((c) => c.name.toLowerCase().includes(q)).map((c) => ({ label: c.name, detail: c.detail, colour: c.colour, run: () => replaceTrigger(c.name) }))
+      : commands.filter((c) => c.label.toLowerCase().includes(q)).map((c) => ({ ...c, run: () => { replaceTrigger(''); c.run(); } }));
+    if (!items.length) return closeMenu();
+    menuState = { start: input.selectionStart - query.length - 1, items, index: 0 };
+    drawMenu();
+  }
+  function drawMenu() {
+    menu.innerHTML = menuState.items.map((item, i) => `<button type="button" role="option" class="${i === menuState.index ? 'is-active' : ''}" data-i="${i}">${item.colour ? `<span class="dot" style="--c:${item.colour}"></span>` : ''}${escape(item.label)}<small>${escape(item.detail)}</small></button>`).join('');
+    menu.hidden = false;
+  }
+  function closeMenu() { menuState = null; menu.hidden = true; }
+  function replaceTrigger(text) {
+    const { start } = menuState;
+    const end = input.selectionStart;
+    input.setRangeText(text, start, end, 'end');
+    closeMenu();
+    render();
+    input.focus();
+  }
+  function insertAtCaret(text) {
+    input.setRangeText(text, input.selectionStart, input.selectionEnd, 'end');
+    render();
+  }
+  if (input) {
+    input.addEventListener('input', () => { render(); updateMenu(); });
+    input.addEventListener('keydown', (event) => {
+      if (!menuState) return;
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        const n = menuState.items.length;
+        menuState.index = (menuState.index + (event.key === 'ArrowDown' ? 1 : n - 1)) % n;
+        drawMenu();
+      } else if (event.key === 'Enter' || event.key === 'Tab') {
+        event.preventDefault();
+        menuState.items[menuState.index].run();
+      } else if (event.key === 'Escape') {
+        closeMenu();
+      }
+    });
+    input.addEventListener('blur', () => setTimeout(closeMenu, 150));
+    menu.addEventListener('mousedown', (event) => {
+      const button = event.target.closest('button');
+      if (!button || !menuState) return;
+      event.preventDefault();
+      menuState.items[Number(button.dataset.i)].run();
+    });
+    render();
+    new ResizeObserver(render).observe(input.parentElement);
   }
 
-  function syncPlayback() {
-    const focused = carousel.contains(document.activeElement) && document.activeElement !== pauseButton;
-    const enabled = !userPaused && !motion.matches;
-    const held = !inView || document.hidden || hovering || focused;
-    carousel.classList.toggle('is-playing', enabled);
-    carousel.classList.toggle('is-held', held);
-    pauseButton.disabled = motion.matches;
-    pauseButton.setAttribute('aria-pressed', String(!enabled));
-    pauseButton.setAttribute('aria-label', motion.matches ? 'Automatic playback is off for reduced motion' : enabled ? 'Pause feature carousel' : 'Play feature carousel');
-    if (!enabled || held) {
-      stopTimer();
+  // The Continue control: the AI writes the next lines of the sample book.
+  const sample = [
+    'Mara turned the brass key until the cabinet sighed open. Inside, on the oldest map of Bellweather Bay, someone had drawn a seventh star in fresh ink.',
+    'Ivo leaned closer. “That isn’t a star,” he said. “It’s a door.”',
+  ];
+  const showcase = document.querySelector('.showcase');
+  const button = document.getElementById('continue');
+  const output = document.getElementById('continuation');
+  const stuck = document.getElementById('stuck-word');
+  let typing = null;
+  function typeInto(element, text, done) {
+    if (reduce) { element.textContent = text; done?.(); return; }
+    let i = 0;
+    clearInterval(typing);
+    typing = setInterval(() => {
+      i += Math.max(1, Math.round(Math.random() * 3));
+      element.textContent = text.slice(0, i);
+      if (i >= text.length) { clearInterval(typing); done?.(); }
+    }, 22);
+  }
+  function continueStory(fromManuscript = false) {
+    if (fromManuscript && input) {
+      const addition = (input.value.endsWith('\n') ? '' : '\n\n') + sample[0];
+      const base = input.value;
+      let i = 0;
+      clearInterval(typing);
+      if (reduce) { input.value = base + addition; render(); return; }
+      typing = setInterval(() => {
+        i += 2;
+        input.value = base + addition.slice(0, i);
+        render();
+        if (i >= addition.length) clearInterval(typing);
+      }, 24);
       return;
     }
-    if (timer !== null) return;
-    startedAt = performance.now();
-    timer = setTimeout(() => {
-      timer = null;
-      selectSlide((activeSlide + 1) % slides.length);
-    }, remaining);
+    const night = showcase.dataset.state !== 'night';
+    showcase.dataset.state = night ? 'night' : 'gold';
+    stuck.textContent = night ? 'Unstuck' : 'Stuck';
+    if (night) typeInto(output, sample.join(' ')); else { clearInterval(typing); output.textContent = ''; }
   }
+  button?.addEventListener('click', () => continueStory(false));
 
-  function selectSlide(index, manual = false) {
-    if (manual) userPaused = true;
-    stopTimer();
-    remaining = duration;
-    carousel.classList.remove('is-playing');
-    activeSlide = (index + slides.length) % slides.length;
-    slides.forEach((slide, position) => {
-      const wasActive = slide.classList.contains('is-active');
-      const isActive = position === activeSlide;
-      slide.classList.toggle('is-leaving', wasActive && !isActive);
-      slide.classList.toggle('is-active', isActive);
-      slide.setAttribute('aria-hidden', String(!isActive));
-      slide.inert = !isActive;
+  // Index cards: one open at a time.
+  const cards = [...document.querySelectorAll('.card')];
+  cards.forEach((card) => {
+    card.querySelector('.card__tab').addEventListener('click', () => {
+      cards.forEach((other) => {
+        const open = other === card ? !other.classList.contains('is-open') : false;
+        other.classList.toggle('is-open', open);
+        other.querySelector('.card__tab').setAttribute('aria-expanded', String(open));
+      });
     });
-    chapters.forEach((chapter, position) => chapter.setAttribute('aria-pressed', String(position === activeSlide)));
-    // Restart the progress animation only on a chapter change, not on hover or focus.
-    void carousel.offsetWidth;
-    if (manual) status.textContent = slides[activeSlide].getAttribute('aria-label');
-    syncPlayback();
-  }
-
-  chapters.forEach(chapter => chapter.addEventListener('click', () => selectSlide(Number(chapter.dataset.feature), true)));
-  carousel.querySelector('[data-carousel="previous"]').addEventListener('click', () => selectSlide(activeSlide - 1, true));
-  carousel.querySelector('[data-carousel="next"]').addEventListener('click', () => selectSlide(activeSlide + 1, true));
-  pauseButton.addEventListener('click', () => {
-    if (motion.matches) return;
-    userPaused = !userPaused;
-    remaining = duration;
-    carousel.classList.remove('is-playing');
-    void carousel.offsetWidth;
-    syncPlayback();
   });
-  carousel.addEventListener('keydown', event => {
-    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-    event.preventDefault();
-    selectSlide(activeSlide + (event.key === 'ArrowRight' ? 1 : -1), true);
-  });
-  stage.addEventListener('pointerenter', event => {
-    if (event.pointerType === 'touch') return;
-    hovering = true;
-    syncPlayback();
-  });
-  stage.addEventListener('pointerleave', () => { hovering = false; syncPlayback(); });
-  carousel.addEventListener('focusin', syncPlayback);
-  carousel.addEventListener('focusout', () => requestAnimationFrame(syncPlayback));
-  document.addEventListener('visibilitychange', syncPlayback);
-  let touchStart;
-  stage.addEventListener('pointerdown', event => {
-    if (event.pointerType === 'touch') touchStart = { x: event.clientX, y: event.clientY };
-  }, { passive: true });
-  stage.addEventListener('pointerup', event => {
-    if (!touchStart || event.pointerType !== 'touch') return;
-    const x = event.clientX - touchStart.x;
-    const y = event.clientY - touchStart.y;
-    touchStart = null;
-    if (Math.abs(x) > 50 && Math.abs(x) > Math.abs(y) * 1.5) selectSlide(activeSlide + (x < 0 ? 1 : -1), true);
-  }, { passive: true });
-  stage.addEventListener('pointercancel', () => { touchStart = null; });
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(entries => {
-      inView = entries[0].isIntersecting;
-      syncPlayback();
-    }, { threshold: 0.15 }).observe(carousel);
-  }
-  syncPlayback();
 
-  // Opening-page perspective and layered curves, without taking over scrolling.
-  const product = document.querySelector('.product-parallax');
-  const curves = document.querySelector('.page-curves');
-  const hero = document.querySelector('.hero');
-  let scheduled = false;
-  let heroInView = true;
-
-  function updateParallax() {
-    scheduled = false;
-    if (motion.matches || !heroInView) return;
-    const progress = Math.max(0, Math.min(1, window.scrollY / (window.innerHeight * 1.1)));
-    product.style.transform = `translateY(${-progress * 35}px) rotateX(${(1 - progress) * 2}deg)`;
-    curves.style.transform = `translateY(${progress * 100}px)`;
-  }
-
-  function queueParallax() {
-    if (scheduled || motion.matches || !heroInView) return;
-    scheduled = true;
-    requestAnimationFrame(updateParallax);
-  }
-
-  if ('IntersectionObserver' in window) {
-    const heroObserver = new IntersectionObserver(entries => {
-      heroInView = entries[0].isIntersecting;
-      if (heroInView) queueParallax();
-    });
-    heroObserver.observe(hero);
-  }
-
-  addEventListener('scroll', queueParallax, { passive: true });
-  addEventListener('resize', queueParallax, { passive: true });
-  motion.addEventListener('change', () => {
-    if (motion.matches) {
-      userPaused = true;
-      syncPlayback();
-      showAll();
-      product.style.removeProperty('transform');
-      curves.style.removeProperty('transform');
-    } else {
-      syncPlayback();
-      queueParallax();
-    }
-  });
-  queueParallax();
+  // The blank in the closing sentence titles the cover beside it.
+  const title = document.getElementById('title-input');
+  const cover = document.getElementById('cover-title');
+  title?.addEventListener('input', () => { cover.textContent = title.value.trim() || 'Your book'; });
 })();

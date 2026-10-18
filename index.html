@@ -2,168 +2,369 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#fafafa">
-  <title>Novely — a home for your next chapter</title>
-  <meta name="description" content="A free, native Mac writing app for novels and picture books. Keep your manuscript, story world and optional AI together. Your library stays on your Mac.">
-  <meta property="og:title" content="Novely — a home for your next chapter">
-  <meta property="og:description" content="A writing home for novels and picture books. Free to use. Made for Mac.">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Novely — a writing room for your novel</title>
+  <meta name="description" content="Novely is a free Mac app for novels and picture books: a paper-like manuscript, your cast and places beside it, and AI that has read the story so far — on your Mac or your own account.">
+  <meta name="theme-color" content="#f5f2ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#14112a" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Novely — a writing room for your novel">
+  <meta property="og:description" content="A free Mac app for novels and picture books, with AI that has read the story so far.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://novly-story.github.io/">
   <meta property="og:image" content="https://novly-story.github.io/assets/novely-og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://novly-story.github.io/">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png">
   <link rel="icon" type="image/svg+xml" href="assets/novely-icon.svg">
-  <link rel="preload" href="assets/lora.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="assets/dm-sans.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/lora-var.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/dm-sans-var.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="assets/site.css">
-  <script src="assets/site.js" defer></script>
+  <script>document.documentElement.classList.add('js')</script>
 </head>
-<body id="top">
+<body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="header shell">
-    <a class="brand" href="#top" aria-label="Novely home"><img src="assets/novely-icon.svg" width="44" height="44" alt=""><span>Novely</span></a>
-    <nav aria-label="Main navigation" class="navigation">
-      <a href="#workspace">The workspace</a>
-      <a href="#ai">Writing with AI</a>
+
+  <header class="nav shell">
+    <a class="brand" href="#top" aria-label="Novely, back to the top"><img src="assets/novely-icon.svg" width="40" height="40" alt=""><span>Novely</span></a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#room">The page</a>
+      <a href="#world">Your world</a>
+      <a href="#ai">AI</a>
       <a href="#questions">Questions</a>
     </nav>
-    <a class="button header-download" href="https://github.com/Novly-Story/releases">Get Novely <span aria-hidden="true">↗</span></a>
+    <a class="ribbon-button small-button" href="https://github.com/Novly-Story/releases/releases/latest">Download</a>
   </header>
 
   <main id="main">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="page-curves" aria-hidden="true">
-        <svg viewBox="0 0 1600 1100" preserveAspectRatio="none"><path class="page-back" d="M-250 280C80 80 155 735 800 745C1445 755 1520 80 1850 280L1850 1200H-250Z"/><path class="page-front" d="M-250 445C175 170 270 840 800 845C1330 850 1425 170 1850 445L1850 1200H-250Z"/></svg>
-      </div>
-      <div class="hero-copy shell">
-        <h1 id="hero-title"><span class="line"><span>Your next chapter</span></span><span class="line"><span>starts here.</span></span></h1>
-        <div class="hero-introduction">
-        <p class="hero-description" data-enter>A writing home for novels and picture books. Made for Mac, with your story world and optional AI close at hand.</p>
-        <div class="hero-action" data-enter>
-          <a class="button primary" href="https://github.com/Novly-Story/releases"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 12.7c0-2.1 1.7-3.2 1.8-3.3-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-2.9-.8-1.5 0-2.9.9-3.7 2.2-1.6 2.7-.4 6.7 1.1 8.9.7 1 1.5 2.1 2.6 2.1 1.1-.1 1.5-.7 2.9-.7 1.4 0 1.8.7 3 .7 1.2 0 1.9-1.1 2.6-2.1.8-1.2 1.1-2.4 1.2-2.5-.1 0-2-0.8-2-3.6ZM14.4 6.3c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1 .1 2.1-.5 2.8-1.3Z"/></svg>Download for Mac</a>
-          <p class="small">Free to use. macOS 26+. Apple silicon.</p>
+    <!-- HERO — a working manuscript on a stage cut with the ribbon's diagonal -->
+    <section class="hero" id="top">
+      <div class="shell hero-copy">
+        <h1 class="lines" aria-label="A writing room for your novel.">
+          <span class="line"><span data-line style="--i:0">A writing room</span></span>
+          <span class="line"><span data-line style="--i:1">for your novel.</span></span>
+        </h1>
+        <p class="hero-lead" data-rise style="--i:2">Novely is a free Mac app for novels and picture books: your manuscript, your cast and places beside it, and an AI that has read the story so far.</p>
+        <div class="hero-action" data-rise style="--i:3">
+          <a class="ribbon-button" href="https://github.com/Novly-Story/releases/releases/latest">Download for Mac</a>
+          <p class="note">Free. macOS 26 on Apple silicon.</p>
         </div>
-        </div>
       </div>
-      <div class="hero-product shell" data-enter>
-        <section class="feature-carousel product-parallax" aria-label="A tour of Novely" aria-roledescription="carousel">
-          <div class="feature-slides" aria-live="off">
-            <article class="feature-slide is-active slide-writing" role="group" aria-roledescription="slide" aria-label="1 of 3: The writing room" data-slide="0">
-              <div class="slide-copy"><h2>Just you.<br> And the page.</h2><p>Settle into a manuscript that feels like a book. Give every chapter room to grow.</p><a href="#workspace" class="slide-link">Explore the writing room <span aria-hidden="true">↗</span></a></div>
-              <figure class="slide-art writing-art"><img src="assets/novely-editor-clean.png" width="2020" height="1240" fetchpriority="high" alt="Novely’s real writing workspace, with chapter navigation and a paper-like manuscript."></figure>
-            </article>
-            <article class="feature-slide slide-world" role="group" aria-roledescription="slide" aria-label="2 of 3: Your story world" data-slide="1" aria-hidden="true" inert>
-              <div class="slide-copy"><h2>Keep every<br> thread close.</h2><p>The chapter, the cast, the places they return to. A whole world, held beside your words.</p><a href="#workspace" class="slide-link">Find your way around <span aria-hidden="true">↗</span></a></div>
-              <figure class="slide-art world-art"><img class="world-manuscript" src="assets/novely-manuscript-detail.png" width="1610" height="1400" alt="The Observatory manuscript page in Novely."><img class="world-chapters" src="assets/novely-story-sidebar.png" width="602" height="1760" alt="The story’s chapters organised beside the manuscript."></figure>
-            </article>
-            <article class="feature-slide slide-assistant" role="group" aria-roledescription="slide" aria-label="3 of 3: Optional AI assistance" data-slide="2" aria-hidden="true" inert>
-              <div class="slide-copy"><h2>A second<br> pair of eyes.</h2><p>Get a nudge when you need one, from an assistant that knows the story so far.</p><a href="#ai" class="slide-link">Meet your writing partner <span aria-hidden="true">↗</span></a></div>
-              <figure class="slide-art assistant-art"><img class="assistant-manuscript" src="assets/novely-manuscript-detail.png" width="1610" height="1400" alt="Your manuscript stays in view while you work with the optional assistant."><img class="assistant-panel" src="assets/novely-ai-context.png" width="794" height="1940" alt="Apple Intelligence in Novely, with the chapter, characters and locations in context."></figure>
-            </article>
-          </div>
-          <div class="carousel-controls">
-            <div class="carousel-chapters" role="group" aria-label="Choose a feature">
-              <button type="button" class="carousel-chapter" data-feature="0" aria-pressed="true"><span>The writing room</span><span class="chapter-progress" aria-hidden="true"><span></span></span></button>
-              <button type="button" class="carousel-chapter" data-feature="1" aria-pressed="false"><span>Your story world</span><span class="chapter-progress" aria-hidden="true"><span></span></span></button>
-              <button type="button" class="carousel-chapter" data-feature="2" aria-pressed="false"><span>A little AI help</span><span class="chapter-progress" aria-hidden="true"><span></span></span></button>
+
+      <div class="stage" data-rise style="--i:4">
+        <svg class="stage-ribbon" viewBox="0 0 160 160" preserveAspectRatio="none" aria-hidden="true"><path d="M0 160 L160 0" /></svg>
+        <div class="slides" id="slides" role="region" aria-roledescription="carousel" aria-label="Novely in four moments">
+          <article class="slide is-active" id="slide-0" role="group" aria-roledescription="slide" aria-label="1 of 4: Write">
+            <div class="page-ui" data-ui aria-label="A live Novely manuscript page. Type to try it.">
+              <div class="page-ui__bar">
+                <span class="page-ui__book">The Atlas of Small Lights</span>
+                <span class="page-ui__stats"><span id="live-words">184</span> words · Page 1 of 1 · Saved</span>
+              </div>
+              <div class="page-ui__paper">
+                <p class="page-ui__title">The Observatory</p>
+                <div class="manuscript">
+                  <div class="manuscript__mirror" aria-hidden="true" id="mirror"></div>
+                  <textarea class="manuscript__input" id="manuscript" spellcheck="false" aria-label="Try the manuscript: type here. Names of characters and places light up, @ mentions someone, / opens commands.">By dusk, the Observatory had become a silhouette against the last blue of the day. Mara climbed the spiral stairs with a brass key in her pocket and salt on her sleeves.
+
+Above her, the great telescope pointed toward a patch of sky that should have held seven stars. Tonight there were six. Ivo waited beside the western window, turning a small lens between his fingers.
+
+Somebody had taken the smallest light first. Type here — try @ or /</textarea>
+                  <div class="menu-ui" id="menu" hidden role="listbox" aria-label="Suggestions"></div>
+                </div>
+                <div class="mentions-ui" id="mentions" aria-live="polite"></div>
+              </div>
             </div>
-            <div class="carousel-transport"><button type="button" data-carousel="previous" aria-label="Previous feature">←</button><button type="button" data-carousel="pause" aria-label="Pause feature carousel" aria-pressed="false"><svg class="pause-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4v12M14 4v12"/></svg><svg class="play-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 8 6-8 6Z"/></svg></button><button type="button" data-carousel="next" aria-label="Next feature">→</button></div>
+          </article>
+
+          <article class="slide" id="slide-1" role="group" aria-roledescription="slide" aria-label="2 of 4: Continue with AI" aria-hidden="true">
+            <div class="page-ui" data-ui>
+              <div class="page-ui__bar"><span class="page-ui__book">The Atlas of Small Lights</span><span class="page-ui__stats">Page 2 of 2 · Writing…</span></div>
+              <div class="page-ui__paper">
+                <p class="page-ui__title">A Map of Missing Stars</p>
+                <p class="ai-page">Mara turned the brass key until the cabinet sighed open. Inside, on the oldest map of Bellweather Bay, someone had drawn a seventh star in fresh ink.</p>
+                <p class="ai-page ai-page--typing"><span id="ai-typed"></span><span class="caret" aria-hidden="true"></span></p>
+              </div>
+            </div>
+            <div class="assistant-ui" data-ui>
+              <p class="assistant-ui__head"><span class="assistant-ui__mark" aria-hidden="true"></span>AI Assistant<small>Apple Intelligence · On-device model</small></p>
+              <p class="assistant-ui__ask">The cabinet holds a map with a new star.</p>
+              <p class="assistant-ui__button"><span class="spinner" aria-hidden="true"></span>Writing the next page…</p>
+            </div>
+          </article>
+
+          <article class="slide" id="slide-2" role="group" aria-roledescription="slide" aria-label="3 of 4: Your cast" aria-hidden="true">
+            <div class="cast-ui" data-ui>
+              <div class="cast-ui__hero">
+                <span class="cast-ui__avatar">M</span>
+                <div><p class="cast-ui__name">Mara Venn</p><p class="cast-ui__aka">aka “Mara” · <span>Protagonist</span></p></div>
+              </div>
+              <dl class="cast-ui__facts">
+                <div><dt>Personality</dt><dd>Stubborn, curious, keeps every key she has ever been given.</dd></div>
+                <div><dt>Appearance</dt><dd>Salt on her sleeves, a brass key on a string, ink on two fingers.</dd></div>
+              </dl>
+              <p class="cast-ui__label">Relationships</p>
+              <p class="cast-ui__rel"><span class="cast-ui__mini">I</span>Ivo Bell<em>Mentor</em></p>
+              <p class="cast-ui__rel"><span class="cast-ui__mini cast-ui__mini--place">O</span>The Observatory<em>Her secret</em></p>
+              <p class="cast-ui__foot">12 mentions in this chapter</p>
+            </div>
+          </article>
+
+          <article class="slide" id="slide-3" role="group" aria-roledescription="slide" aria-label="4 of 4: A picture book" aria-hidden="true">
+            <div class="kids-ui" data-ui>
+              <div class="kids-ui__bar"><span>Luna and the Star Garden</span><span>Page 3 · 800 × 600</span></div>
+              <div class="kids-ui__canvas">
+                <span class="kids-ui__moon" aria-hidden="true"></span>
+                <span class="kids-ui__hill" aria-hidden="true"></span>
+                <span class="kids-ui__star s-a" aria-hidden="true"></span><span class="kids-ui__star s-b" aria-hidden="true"></span><span class="kids-ui__star s-c" aria-hidden="true"></span><span class="kids-ui__star s-d" aria-hidden="true"></span>
+                <p class="kids-ui__text">One quiet night, a little silver fox named <b>Luna</b> looked up at the sky.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="slide-tabs" role="tablist" aria-label="Choose a moment">
+          <button class="slide-tab is-active" role="tab" aria-selected="true" aria-controls="slide-0" data-go="0"><span class="slide-tab__fill"></span><span class="slide-tab__label">Write</span></button>
+          <button class="slide-tab" role="tab" aria-selected="false" aria-controls="slide-1" data-go="1"><span class="slide-tab__fill"></span><span class="slide-tab__label">Continue</span></button>
+          <button class="slide-tab" role="tab" aria-selected="false" aria-controls="slide-2" data-go="2"><span class="slide-tab__fill"></span><span class="slide-tab__label">Cast</span></button>
+          <button class="slide-tab" role="tab" aria-selected="false" aria-controls="slide-3" data-go="3"><span class="slide-tab__fill"></span><span class="slide-tab__label">Picture book</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE REAL THING — the signature shutter on the app itself -->
+    <section class="room" id="room">
+      <div class="shell room-copy">
+        <h2 data-reveal>Pages that turn themselves.</h2>
+        <p class="statement" data-reveal style="--i:1">A page that looks like a book. When it fills, the next one begins on its own.</p>
+      </div>
+      <figure class="room-shot" data-shutter>
+        <div class="notch-mask"><div class="shutter">
+          <img src="assets/shots/editor.webp" width="2400" height="1445" alt="Novely on a Mac: the chapter list on the left, the page ‘The Observatory’ in the middle, and the AI Assistant with the book’s context on the right." loading="lazy" decoding="async">
+        </div></div>
+        <figcaption class="shell">The Atlas of Small Lights, a sample book, open in Novely.</figcaption>
+      </figure>
+    </section>
+
+    <!-- SHOWCASE — the one control the product turns on, blown up -->
+    <section class="showcase" id="ai" data-state="gold">
+      <div class="shell showcase-copy">
+        <h2 data-reveal><span id="stuck-word">Stuck</span> on page two?</h2>
+        <p data-reveal style="--i:1">Press Continue and the AI writes the next page in your voice. It knows your genre, your characters and places, the chapter so far, and the suggestions you accepted.</p>
+        <p class="providers" data-reveal style="--i:2">Apple Intelligence on your Mac, an open model running locally, Ollama, or your own Claude, OpenAI, Gemini or OpenRouter account. AI is optional, and there are no credits to buy.</p>
+        <p class="continuation" id="continuation" aria-live="polite"></p>
+      </div>
+      <div class="control-wrap" data-ui>
+        <button class="continue-ui" id="continue" type="button" aria-describedby="continuation">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5c.6 4.6 1.9 5.9 6.5 6.5-4.6.6-5.9 1.9-6.5 6.5-.6-4.6-1.9-5.9-6.5-6.5 4.6-.6 5.9-1.9 6.5-6.5Z"/><path d="M19 14c.3 2.2.8 2.7 3 3-2.2.3-2.7.8-3 3-.3-2.2-.8-2.7-3-3 2.2-.3 2.7-.8 3-3Z"/></svg>
+          <span>Continue the story</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- FEATURES — close-ups on a board -->
+    <section class="board-section" id="world">
+      <div class="board">
+        <div class="tile t-heading"><h2 data-reveal>Your whole world, close.</h2></div>
+
+        <figure class="tile t-ai picture-tile" data-reveal style="--i:1">
+          <div class="tile-media"><img src="assets/shots/ai.jpg" width="740" height="1160" alt="The AI Assistant panel: a field to describe the next page, a Continue the story button, and the book's context: chapter, characters Ivo Bell and Mara Venn, locations." loading="lazy" decoding="async"></div>
+          <figcaption><strong>It reads the story so far</strong>Book, chapter, cast and summary, sent with every request.</figcaption>
+        </figure>
+
+        <figure class="tile t-sidebar picture-tile" data-reveal style="--i:2">
+          <div class="tile-media"><img src="assets/shots/sidebar.jpg" width="602" height="1000" alt="The sidebar: Chapters, Characters and Locations tabs, with chapters The Observatory, A Map of Missing Stars and The Tide Archive." loading="lazy" decoding="async"></div>
+          <figcaption><strong>Chapters, cast, places</strong>Three tabs beside every page.</figcaption>
+        </figure>
+
+        <div class="tile t-insight" data-reveal style="--i:3">
+          <div class="insight-ui" data-ui>
+            <span class="insight-ui__dot"></span>
+            <span class="insight-ui__title">Mara Venn assigned but never mentioned in “The Tide Archive”</span>
+            <span class="insight-ui__actions"><span>Accept</span><span>Dismiss</span></span>
           </div>
-          <p class="visually-hidden carousel-status" aria-live="polite"></p>
-        </section>
-      </div>
-    </section>
-
-    <section class="workspace section shell" id="workspace" aria-labelledby="workspace-title">
-      <div class="section-heading">
-        <h2 id="workspace-title" data-reveal>The whole story,<br>in view.</h2>
-        <p data-reveal>Your draft is only part of the picture. Keep chapters, characters, places and the details that matter right beside the page.</p>
-      </div>
-      <div class="workspace-explorer" data-reveal>
-        <div class="explorer-controls" role="group" aria-label="Explore the Novely workspace">
-          <button type="button" data-view="manuscript" aria-pressed="true">The manuscript</button>
-          <button type="button" data-view="world" aria-pressed="false">Your story world</button>
-          <button type="button" data-view="assistant" aria-pressed="false">The AI assistant</button>
+          <p class="caption"><strong>It notices forgotten threads</strong>Unused characters, unvisited places, unrevealed secrets.</p>
         </div>
-        <div class="explorer-stage">
-          <div class="explorer-image" data-focus="manuscript"><img src="assets/novely-editor-clean.png" width="2020" height="1240" loading="lazy" alt="Explore the manuscript, chapter navigation and story-aware assistant in a real Novely window."></div>
-          <div class="explorer-caption"><p id="view-description" aria-live="polite">A clear page, chapter by chapter. Format your draft, highlight a passage and keep writing as pages break automatically.</p><span class="explorer-hint" aria-hidden="true">A closer look at Novely</span></div>
-        </div>
-      </div>
-    </section>
 
-    <section class="writing section" aria-labelledby="writing-title">
-      <div class="shell writing-layout">
-        <div class="writing-copy">
-          <h2 id="writing-title" data-reveal>Lose yourself<br>in the story.</h2>
-          <p data-reveal>A paper-like editor, familiar Mac controls and space to think. The tools are there when you need them, without taking over the page.</p>
-          <div class="writing-details">
-            <div data-reveal><h3>Follow the thread</h3><p>Chapters and automatic page breaks give a long manuscript a little structure. Mention a character or place to connect it to your world.</p></div>
-            <div data-reveal><h3>Leave yourself a note</h3><p>Highlight a line for later, shape a passage with rich formatting, or reach for a writing command with a slash.</p></div>
+        <figure class="tile t-chart picture-tile drift-tile" data-reveal style="--i:4">
+          <div class="tile-media"><img src="assets/shots/star-chart.jpg" width="1800" height="1523" alt="A 1660 engraved celestial chart, the northern sky drawn as figures inside a circle, with cherubs in the corners." loading="lazy" decoding="async"></div>
+          <figcaption><strong>Places with secrets</strong>Give the Observatory a secret, and the AI knows to plant it. Chart: Cellarius, 1660, Rijksmuseum.</figcaption>
+        </figure>
+
+        <figure class="tile t-shelf picture-tile" data-reveal style="--i:5">
+          <div class="tile-media"><img src="assets/shots/shelf.jpg" width="860" height="908" alt="The two sample books every new Novely library starts with: The Atlas of Small Lights, a mystery novel, and Luna and the Star Garden, a picture book." loading="lazy" decoding="async"></div>
+          <figcaption><strong>Novels and picture books</strong>One library, kept on your Mac.</figcaption>
+        </figure>
+
+        <div class="tile t-mentions" data-reveal style="--i:6">
+          <div class="chips-ui" data-ui>
+            <span style="--c:#f59e0b">Mara <b>×3</b></span>
+            <span style="--c:#8b5cf6">Ivo <b>×2</b></span><!-- taste-skill-ignore: the character's colour in the app -->
+            <span style="--c:#10b981">The Observatory <b>×1</b></span>
           </div>
+          <p class="caption"><strong>Every name, counted</strong>Mentions tracked per chapter.</p>
         </div>
-        <div class="manuscript-composition" data-reveal>
-          <figure class="manuscript-crop"><img src="assets/novely-manuscript-detail.png" width="1610" height="1400" loading="lazy" alt="The Observatory chapter in Novely’s paper-like manuscript editor, with rich text and page controls."></figure>
-          <figure class="chapter-crop"><img src="assets/novely-story-sidebar.png" width="602" height="1760" loading="lazy" alt="Novely chapter navigation with The Observatory, A Map of Missing Stars, and The Tide Archive."></figure>
-          <p class="small composition-caption">A real Novely draft. An imaginary world.</p>
-        </div>
-      </div>
-    </section>
 
-    <section class="ai section" id="ai" aria-labelledby="ai-title">
-      <div class="shell ai-layout">
-        <div class="ai-visual" data-reveal><figure><img src="assets/novely-ai-context.png" width="794" height="1940" loading="lazy" alt="Novely’s Apple Intelligence assistant, with the current chapter, characters, locations and story insights in context."></figure></div>
-        <div class="ai-copy">
-          <h2 id="ai-title" data-reveal>A little help.<br>Still your story.</h2>
-          <p data-reveal>When you want a second pair of eyes, invite AI into the draft. Continue a scene, rethink a passage or explore what happens next, with your book’s context in mind.</p>
-          <div class="ai-options" data-reveal>
-            <div><h3>On your Mac</h3><p>Use Apple Intelligence or download a local model. Your writing can stay on your device.</p></div>
-            <div><h3>Or your chosen AI</h3><p>Connect a cloud provider you already use. You choose when to send a request and what to keep.</p></div>
-          </div>
-          <div class="providers" aria-label="Supported cloud AI providers" data-reveal>
-            <span><img src="assets/anthropic.svg" width="22" height="22" alt="">Claude</span><span><img src="assets/openai.svg" width="22" height="22" alt="">OpenAI</span><span><img src="assets/googlegemini.svg" width="22" height="22" alt="">Gemini</span><span><img src="assets/openrouter.svg" width="22" height="22" alt="">OpenRouter</span>
-          </div>
-          <p class="small" data-reveal>AI is optional. Cloud providers bill your own account directly. Novely has no subscription or AI credits.</p>
+        <div class="tile t-highlight" data-reveal style="--i:7">
+          <p class="highlight-ui" data-ui><mark>Tonight there were six.</mark></p>
+          <p class="caption"><strong>Highlights with notes</strong>Mark a line, leave yourself a note, or ask AI to rework it.</p>
         </div>
       </div>
     </section>
 
-    <section class="possibilities section shell" aria-labelledby="possibilities-title">
-      <h2 id="possibilities-title" data-reveal>Every draft<br>has a future.</h2>
-      <div class="possibility-list">
-        <article data-reveal><h3>Keep the earlier version.</h3><p>Save a draft before a big rewrite. Compare versions side by side and see what changed, without losing where you started.</p><span class="format-word" aria-hidden="true">Drafts</span></article>
-        <article data-reveal><h3>Make room for pictures.</h3><p>Writing for little readers? Arrange text and illustrations on a picture-book canvas, with each page composed your way.</p><span class="format-word" aria-hidden="true">Pictures</span></article>
-        <article data-reveal><h3>Let the book leave the desk.</h3><p>Export your novel as a print-ready PDF with trim sizes and margins, or as an EPUB for e-readers. Picture books export to PDF.</p><span class="format-word" aria-hidden="true">PDF & EPUB</span></article>
-        <article data-reveal><h3>Keep your library close.</h3><p>Your books live locally on your Mac, not in a Novely cloud account. Write without a connection when you’re not using cloud AI.</p><span class="format-word" aria-hidden="true">Yours</span></article>
+    <!-- THE BAND — one ribbon across the page -->
+    <div class="ribbon-band" aria-hidden="true"><div class="ribbon-band__strip drift-x"></div></div>
+
+    <!-- ABOUT — a book has always been words and pictures -->
+    <section class="carroll">
+      <div class="shell carroll-grid">
+        <div class="carroll-copy">
+          <h2 data-reveal>Words and pictures.</h2>
+          <p class="statement" data-reveal style="--i:1">Lewis Carroll wrote Alice by hand and drew her himself. Novely keeps both kinds of book.</p>
+          <p class="carroll-detail" data-reveal style="--i:2">Novels get chapters and pages that break on their own. Picture books get an 800 by 600 canvas where text and illustration share the page, with pictures from Image Playground on your Mac.</p>
+        </div>
+        <figure class="carroll-main notch-mask" data-reveal style="--i:1">
+          <img class="drift" src="assets/shots/alice-18r.jpg" width="1270" height="2000" alt="Lewis Carroll's handwritten manuscript of Alice's Adventures Under Ground, page 33: the White Rabbit, drawn in ink, scolds Alice beside the text." loading="lazy" decoding="async">
+        </figure>
+        <figure class="carroll-small notch-mask" data-reveal style="--i:3">
+          <video autoplay muted loop playsinline preload="metadata" poster="assets/writing-with-fountain-pen-poster.jpg" width="854" height="436" aria-hidden="true">
+            <source src="assets/writing-with-fountain-pen.mp4" type="video/mp4">
+            <source src="assets/writing-with-fountain-pen.webm" type="video/webm">
+          </video>
+        </figure>
+        <p class="credit">Lewis Carroll, <cite>Alice’s Adventures Under Ground</cite>, 1864, British Library, public domain. Film: “Writing with fountain pen”, Wikimedia Commons, CC BY-SA 4.0.</p>
       </div>
     </section>
 
-    <section class="questions section shell" id="questions" aria-labelledby="questions-title">
-      <h2 id="questions-title" data-reveal>Before your<br>first chapter.</h2>
-      <div class="question-list">
-        <details data-reveal open><summary>Is Novely really free?<span aria-hidden="true"></span></summary><p>Yes. Novely has no subscription, credits or writing limits. If you connect a cloud AI provider, any charges come from that provider on your own account.</p></details>
-        <details data-reveal><summary>Which Mac do I need?<span aria-hidden="true"></span></summary><p>An Apple silicon Mac running macOS 26 or later. Apple Intelligence availability also depends on your device, language and region.</p></details>
-        <details data-reveal><summary>Do I have to use AI?<span aria-hidden="true"></span></summary><p>No. The writing workspace works without AI. When you want assistance, choose Apple Intelligence, a local MLX model, or a connected cloud provider. Ollama is also supported when available on your Mac.</p></details>
-        <details data-reveal><summary>Where does my writing go?<span aria-hidden="true"></span></summary><p>Your library is stored locally on your Mac. If you choose cloud AI, the relevant prompt and story context are sent to that provider for your request, subject to its privacy terms.</p></details>
-        <details data-reveal><summary>Can I make a picture book?<span aria-hidden="true"></span></summary><p>Yes. Picture books have a visual canvas for arranging text and illustrations. Their pages stay as you compose them, rather than splitting automatically, and can be exported to PDF.</p></details>
-        <details data-reveal><summary>How do I download it?<span aria-hidden="true"></span></summary><p>The download buttons take you to Novely’s public GitHub releases. Choose the latest available Mac release and follow its installation notes. If no build is listed yet, check back there for the first release.</p></details>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <svg class="footer-curve" viewBox="0 0 1600 180" preserveAspectRatio="none" aria-hidden="true"><path d="M0 180V12Q800 240 1600 12V180Z"/></svg>
+    <!-- HOW IT WORKS — the stages as one bar -->
+    <section class="journey">
       <div class="shell">
-        <div class="footer-top">
-          <div><h2 data-reveal>The rest is<br>yours to write.</h2><a class="button primary" href="https://github.com/Novly-Story/releases" data-reveal>Download for Mac <span aria-hidden="true">↗</span></a><p class="small" data-reveal>Free to use. Made for your Mac.</p></div>
-          <nav class="footer-links" aria-label="Footer navigation"><a href="#workspace">The workspace</a><a href="#ai">Writing with AI</a><a href="https://github.com/Novly-Story/releases">Releases on GitHub ↗</a><a href="#top">Back to the beginning ↑</a></nav>
+        <h2 data-reveal>From first line to EPUB.</h2>
+        <div class="bar" data-ui data-reveal style="--i:1">
+          <div class="bar__seg s1" style="--grow:12"><p class="bar__label">A minute</p></div>
+          <div class="bar__seg s2" style="--grow:56"><p class="bar__label">As long as it takes</p></div>
+          <div class="bar__seg s3" style="--grow:14"><p class="bar__label">Seconds</p></div>
+          <div class="bar__seg s4" style="--grow:18"><p class="bar__label">One click</p></div>
         </div>
-        <div class="footer-bottom"><a class="brand" href="#top"><img src="assets/novely-icon.svg" width="44" height="44" alt=""><span>Novely</span></a><p class="small">For the stories only you can tell.</p></div>
-        <div class="footer-wordmark" aria-hidden="true" data-reveal>Novely</div>
+        <div class="bar-notes">
+          <p style="--grow:12;--i:2" data-reveal>First, pick a novel or a picture book, a genre and a language.</p>
+          <p style="--grow:56;--i:3" data-reveal>Then write, with AI help only when you ask for it.</p>
+          <p style="--grow:14;--i:4" data-reveal>Check the story for loose threads.</p>
+          <p style="--grow:18;--i:5" data-reveal>Export a print-ready PDF or an EPUB.</p>
+        </div>
       </div>
-    </footer>
+    </section>
+
+    <!-- LIST — one item per poster line -->
+    <section class="poster" aria-label="Everything else in Novely">
+      <ul class="poster-list">
+        <li data-reveal><span class="poster-item">drafts</span><span class="poster-fact">Compare any two versions</span></li>
+        <li data-reveal><span class="poster-item">pictures</span><span class="poster-fact">Picture-book canvas</span></li>
+        <li data-reveal><span class="poster-item">print</span><span class="poster-fact">PDF in trade 5.5 × 8.5 in</span></li>
+        <li data-reveal><span class="poster-item">e-books</span><span class="poster-fact">EPUB 3 for every reader</span></li>
+        <li data-reveal><span class="poster-item">episodes</span><span class="poster-fact">Chapters into video, priced first</span></li>
+        <li data-reveal><span class="poster-item">yours</span><span class="poster-fact">One file, on your Mac</span></li>
+      </ul>
+    </section>
+
+    <!-- FAQ — tabbed index cards -->
+    <section class="faq" id="questions">
+      <div class="shell faq-inner">
+        <h2 data-reveal>Before chapter one.</h2>
+        <div class="cards" data-reveal style="--i:1">
+          <div class="card is-open" style="--n:0">
+            <button class="card__tab" aria-expanded="true" aria-controls="a0" id="q0"><span class="card__topic">Price</span><span class="card__q">Is Novely really free?</span></button>
+            <div class="card__panel" id="a0" role="region" aria-labelledby="q0"><div><p>Yes. Novely has no subscription, credits or writing limits. If you connect a cloud AI provider, that provider bills your own account directly.</p></div></div>
+          </div>
+          <div class="card" style="--n:1">
+            <button class="card__tab" aria-expanded="false" aria-controls="a1" id="q1"><span class="card__topic">Your Mac</span><span class="card__q">Which Mac do I need?</span></button>
+            <div class="card__panel" id="a1" role="region" aria-labelledby="q1"><div><p>An Apple silicon Mac with macOS 26 or later. Apple Intelligence also depends on your device, language and region; local models and cloud AI work without it.</p></div></div>
+          </div>
+          <div class="card" style="--n:2">
+            <button class="card__tab" aria-expanded="false" aria-controls="a2" id="q2"><span class="card__topic">AI</span><span class="card__q">Do I have to use AI?</span></button>
+            <div class="card__panel" id="a2" role="region" aria-labelledby="q2"><div><p>No. Everything about writing works without it. When you want help, choose Apple Intelligence, an open model on your Mac, Ollama, or a cloud provider you connect.</p></div></div>
+          </div>
+          <div class="card" style="--n:3">
+            <button class="card__tab" aria-expanded="false" aria-controls="a3" id="q3"><span class="card__topic">Privacy</span><span class="card__q">Where does my writing go?</span></button>
+            <div class="card__panel" id="a3" role="region" aria-labelledby="q3"><div><p>Your library is one file on your Mac. With on-device AI nothing leaves it. If you choose a cloud AI, the prompt and story context for that request go to that provider, under its terms.</p></div></div>
+          </div>
+          <div class="card" style="--n:4">
+            <button class="card__tab" aria-expanded="false" aria-controls="a4" id="q4"><span class="card__topic">Moving in</span><span class="card__q">Can I bring my books?</span></button>
+            <div class="card__panel" id="a4" role="region" aria-labelledby="q4"><div><p>Books from the Author Book web app come across in one import: chapters, characters, places, relationships, insights, portraits and episodes.</p></div></div>
+          </div>
+          <div class="card" style="--n:5">
+            <button class="card__tab" aria-expanded="false" aria-controls="a5" id="q5"><span class="card__topic">Updates</span><span class="card__q">How do I install it?</span></button>
+            <div class="card__panel" id="a5" role="region" aria-labelledby="q5"><div><p>Download the signed, notarized disk image from GitHub and drag Novely to Applications. After that it keeps itself up to date.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA — a sentence with a blank -->
+    <section class="cta">
+      <div class="shell cta-grid">
+        <form class="cta-sentence" action="https://github.com/Novly-Story/releases/releases/latest" method="get" data-reveal>
+          <label class="visually-hidden" for="title-input">Your book's title</label>
+          <h2>
+            <span>Write <input id="title-input" type="text" placeholder="your book" autocomplete="off" maxlength="28"></span>
+            <span>on your Mac.</span>
+          </h2>
+          <button type="submit" class="cta-button">Download</button>
+        </form>
+        <p class="cta-note" data-reveal style="--i:1">Free. The signed disk image comes from Novely's public releases on GitHub.</p>
+        <div class="cover-ui" data-ui aria-hidden="true" data-reveal style="--i:2">
+          <div class="cover-ui__ribbon"></div>
+          <p class="cover-ui__title" id="cover-title">Your book</p>
+          <p class="cover-ui__author">A novel</p>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <!-- FOOTER — the mark, built large -->
+  <footer class="footer">
+    <div class="shell">
+      <div class="footer-mark">
+      <svg class="mark-large" viewBox="262 200 500 602" role="img" aria-label="Novely: three books on a shelf spell the letter N">
+        <rect class="m-page" x="298" y="254" width="112" height="516" rx="14"/>
+        <rect class="m-page" x="614" y="254" width="112" height="516" rx="14"/>
+        <g class="m-band"><rect x="298" y="306" width="112" height="12"/><rect x="298" y="704" width="112" height="12"/><rect x="614" y="306" width="112" height="12"/><rect x="614" y="704" width="112" height="12"/></g>
+        <g transform="rotate(-21 600 770)">
+          <rect class="m-ribbon" x="600" y="236" width="124" height="534" rx="14"/>
+          <rect class="m-ribbon-band" x="600" y="296" width="124" height="14"/>
+          <rect class="m-ribbon-band" x="600" y="696" width="124" height="14"/>
+        </g>
+        <rect class="m-shelf" x="262" y="780" width="500" height="22" rx="11"/>
+      </svg>
+      <p class="footer-word" aria-hidden="true">Novely</p>
+      </div>
+      <div class="footer-links">
+        <nav aria-label="Novely">
+          <p>Novely</p>
+          <a href="#room">The page</a>
+          <a href="#world">Your world</a>
+          <a href="#ai">AI</a>
+          <a href="#questions">Questions</a>
+        </nav>
+        <nav aria-label="Download">
+          <p>Download</p>
+          <a href="https://github.com/Novly-Story/releases/releases/latest">Latest release</a>
+          <a href="https://github.com/Novly-Story/releases/releases">All releases</a>
+        </nav>
+        <nav aria-label="Brand">
+          <p>Brand</p>
+          <a href="brand.html">The mark</a>
+          <a href="assets/novely-icon.svg" download="Novely.svg">Vector artwork</a>
+        </nav>
+        <div class="footer-credits">
+          <p>Pictures</p>
+          <p>Lewis Carroll, Alice’s Adventures Under Ground, 1864, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Alice%27s_adventures_under_ground,_p_1.png">Wikimedia Commons</a>. “Writing with fountain pen”, CC BY-SA 4.0, via <a href="https://commons.wikimedia.org/wiki/File:Writing_with_fountain_pen.mpg">Wikimedia Commons</a>. Andreas Cellarius, celestial chart, 1660, Rijksmuseum, CC0, via <a href="https://commons.wikimedia.org/wiki/File:Hemelkaart_met_Christelijke_sterrenbeelden_Coelistellati_Christiani_haemisphaerium_prius_(titel_op_object),_RP-P-AO-29-1-24.jpg">Wikimedia Commons</a>.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Novely. For the stories only you can tell.</p>
+        <a class="ribbon-button small-button" href="#top">Back to the top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/site.js" defer></script>
 </body>
 </html>

@@ -1,1 +1,10 @@
 .taste-skill/
+# Local tooling and working files (not part of the site)
+.agents/
+.claude/
+.site-backup/
+skills-lock.json
+# Archival originals; the site uses the cropped copies in assets/shots
+assets/alice-s-adventures-under-ground-p-1.png
+assets/hemelkaart-met-christelijke-sterrenbeelden-coelistellati-chr.jpg
+assets/manuscript-of-alice-s-adventures-under-ground.jpg

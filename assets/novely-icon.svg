@@ -1,45 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
   <title>Novely</title>
-  <desc>An open book whose two pages are the uprights of an N; the ribbon bookmark falling across the spine draws its diagonal. A small gold spark sits above it.</desc>
+  <desc>Three books on a shelf spell an N: two cream books stand upright and a gold book leans between them as the diagonal, on deep night indigo.</desc>
   <defs>
-    <linearGradient id="field" x1="12%" y1="0%" x2="88%" y2="100%">
-      <stop offset="0%" stop-color="#231a63"/>
-      <stop offset="52%" stop-color="#4a35c6"/>
-      <stop offset="100%" stop-color="#8b66f2"/>
+    <linearGradient id="field" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a1f80"/>
+      <stop offset="1" stop-color="#150f45"/>
     </linearGradient>
-    <radialGradient id="glow" cx="50%" cy="4%" r="75%">
-      <stop offset="0%" stop-color="#c8bbff" stop-opacity=".24"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#fffaf0"/>
-      <stop offset="100%" stop-color="#f3e9d6"/>
-    </linearGradient>
-    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ffd27a"/>
-      <stop offset="100%" stop-color="#f08a5d"/>
-    </linearGradient>
-    <filter id="lift" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#140c3d" flood-opacity=".38"/>
-    </filter>
-    <filter id="ribbonShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#3a1c10" flood-opacity=".28"/>
-    </filter>
     <clipPath id="body"><rect x="100" y="100" width="824" height="824" rx="184"/></clipPath>
   </defs>
-  <g clip-path="url(#body)">
-    <rect x="100" y="100" width="824" height="824" fill="url(#field)"/>
-    <rect x="100" y="100" width="824" height="824" fill="url(#glow)"/>
+  <g clip-path="url(#body)"><rect x="100" y="100" width="824" height="824" fill="url(#field)"/></g>
+  <!-- the standing books: the uprights of the N -->
+  <g fill="#fbf3e2">
+    <rect x="298" y="254" width="112" height="516" rx="14"/>
+    <rect x="614" y="254" width="112" height="516" rx="14"/>
   </g>
-  <!-- page edges below the pages -->
-  <path d="M286 352v390q104-30 212 8M738 352v390q-104-30-212 8" fill="none" stroke="#c9bdf6" stroke-opacity=".55" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- the pages: the uprights of the N -->
-  <g filter="url(#lift)">
-    <path d="M306 330q96-34 190-6v404q-94-26-190 2Z" fill="url(#page)"/>
-    <path d="M528 324q94-28 190 6v400q-96-28-190-2Z" fill="url(#page)"/>
+  <g fill="#cdbfa0">
+    <rect x="298" y="306" width="112" height="12"/><rect x="298" y="704" width="112" height="12"/>
+    <rect x="614" y="306" width="112" height="12"/><rect x="614" y="704" width="112" height="12"/>
   </g>
-  <!-- the ribbon: the diagonal of the N, ending in a swallowtail -->
-  <path d="M306 334l68-24 344 380v110l-32-32-32 32v-81Z" fill="url(#ribbon)" filter="url(#ribbonShadow)"/>
-  <!-- spark -->
-  <path d="M742 176c8 52 18 62 70 70-52 8-62 18-70 70-8-52-18-62-70-70 52-8 62-18 70-70Z" fill="#ffd98c"/>
+  <!-- the leaning book: the diagonal -->
+  <g transform="rotate(-21 600 770)">
+    <rect x="600" y="236" width="124" height="534" rx="14" fill="#f4b25f"/>
+    <rect x="600" y="296" width="124" height="14" fill="#c97a2c"/>
+    <rect x="600" y="696" width="124" height="14" fill="#c97a2c"/>
+    <rect x="638" y="430" width="48" height="120" rx="6" fill="#ffe2ae"/>
+  </g>
+  <!-- the shelf -->
+  <rect x="262" y="780" width="500" height="22" rx="11" fill="#6f5ce0"/>
 </svg>
