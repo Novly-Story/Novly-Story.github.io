@@ -1,4 +1,4 @@
-// Novely website: reveals, the live manuscript, the Continue control, the index cards, the cover.
+// Novly website: reveals, the live manuscript, the Continue control, the index cards, the cover.
 (() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -21,7 +21,7 @@
   }
 
 
-  // Hero carousel: four moments of Novely, advancing on their own with a ribbon progress tab.
+  // Hero carousel: four moments of Novly, advancing on their own with a ribbon progress tab.
   (() => {
     const stage = document.querySelector('.stage');
     const slides = [...document.querySelectorAll('.slide')];
@@ -126,7 +126,7 @@
     schedule();
   })();
 
-  // The live manuscript: names light up as you type, like Novely's preview.
+  // The live manuscript: names light up as you type, like Novly's preview.
   const cast = [
     { name: 'Mara Venn', short: 'Mara', kind: 'Character', detail: 'Protagonist', colour: '#f59e0b' },
     { name: 'Ivo Bell', short: 'Ivo', kind: 'Character', detail: 'Mentor', colour: '#8b5cf6' }, // taste-skill-ignore: the character's colour in the app
@@ -287,13 +287,14 @@
   const cover = document.getElementById('cover-title');
   title?.addEventListener('input', () => { cover.textContent = title.value.trim() || 'Your book'; });
 
-  // Download buttons link straight to the newest Novely.dmg (GitHub's latest-release download URL),
+  // Download buttons link straight to the newest Novly.dmg (GitHub's latest-release download URL),
   // so they work without JavaScript. The lookup only pins the exact file and shows the version.
   const RELEASES = 'https://api.github.com/repos/Novly-Story/releases/releases/latest';
   fetch(RELEASES, { headers: { Accept: 'application/vnd.github+json' } })
     .then((response) => (response.ok ? response.json() : Promise.reject(response.status)))
     .then((release) => {
-      const dmg = (release.assets || []).find((asset) => asset.name === 'Novely.dmg')
+      const dmg = (release.assets || []).find((asset) => asset.name === 'Novly.dmg')
+        || (release.assets || []).find((asset) => asset.name === 'Novely.dmg')
         || (release.assets || []).find((asset) => asset.name.endsWith('.dmg'));
       const version = (release.tag_name || '').replace(/^v/, '');
       if (dmg) {

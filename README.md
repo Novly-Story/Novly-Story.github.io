@@ -1,6 +1,6 @@
-# Novely website
+# Novly website
 
-The public GitHub Pages site for Novely, a free Mac writing app for novels and picture books.
+The public GitHub Pages site for Novly, a free Mac writing app for novels and picture books.
 
 - Website: https://novly-story.github.io
 - Public installers and release notes: https://github.com/Novly-Story/releases
@@ -29,4 +29,4 @@ python3 scripts/generate-brand.py --website ../Novly-Story.github.io
 
 Screenshots contain an illustrative fictional manuscript. Fonts are hosted locally; their SIL Open Font License notices are in `assets/FONT-LICENSES.txt`.
 
-Download buttons currently lead to the public distribution repository. A first installer must be signed, notarized and published before linking directly to `releases/latest/download/Novely.dmg`.
+Download buttons currently lead to the public distribution repository. A first installer must be signed, notarized and published before linking directly to `releases/latest/download/Novly.dmg`.
