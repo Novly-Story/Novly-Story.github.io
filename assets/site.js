@@ -306,4 +306,24 @@
       if (version) document.querySelectorAll('[data-release-version]').forEach((label) => { label.textContent = ` \u00b7 v${version}`; });
     })
     .catch(() => {});
+
+  // Story Map: switch between the constellation and the storylines.
+  const mapTabs = Array.from(document.querySelectorAll('.map-tab'));
+  function showMap(index, focus) {
+    mapTabs.forEach((tab, i) => {
+      const on = i === index;
+      tab.setAttribute('aria-selected', String(on));
+      tab.tabIndex = on ? 0 : -1;
+      document.getElementById(tab.getAttribute('aria-controls'))?.classList.toggle('is-active', on);
+      if (on && focus) tab.focus();
+    });
+  }
+  mapTabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => showMap(i, false));
+    tab.addEventListener('keydown', (event) => {
+      if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      event.preventDefault();
+      showMap((i + (event.key === 'ArrowRight' ? 1 : mapTabs.length - 1)) % mapTabs.length, true);
+    });
+  });
 })();

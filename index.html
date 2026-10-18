@@ -28,6 +28,7 @@
     <nav class="nav-links" aria-label="Sections">
       <a href="#room">The page</a>
       <a href="#world">Your world</a>
+      <a href="#map">Story map</a>
       <a href="#ai">AI</a>
       <a href="#questions">Questions</a>
     </nav>
@@ -212,6 +213,32 @@ Somebody had taken the smallest light first. Type here — try @ or /</textarea>
     <!-- THE BAND — one ribbon across the page -->
     <div class="ribbon-band" aria-hidden="true"><div class="ribbon-band__strip drift-x"></div></div>
 
+    <!-- STORY MAP — the book as a sky -->
+    <section class="map-section" id="map">
+      <div class="shell map-copy">
+        <h2 data-reveal>Your story, as a sky.</h2>
+        <p class="statement" data-reveal style="--i:1">Characters are stars, places are landmarks. Press play and the book lights up, chapter by chapter.</p>
+      </div>
+      <div class="shell map-switch" role="tablist" aria-label="Story Map views" data-reveal style="--i:2">
+        <button class="map-tab" role="tab" id="map-tab-0" aria-selected="true" aria-controls="map-view-0" data-map="0">Constellation</button>
+        <button class="map-tab" role="tab" id="map-tab-1" aria-selected="false" aria-controls="map-view-1" data-map="1" tabindex="-1">Storylines</button>
+      </div>
+      <figure class="map-shot" data-shutter>
+        <div class="notch-mask"><div class="shutter map-frames">
+          <img class="map-frame is-active" id="map-view-0" role="tabpanel" aria-labelledby="map-tab-0" src="assets/shots/map-constellation.jpg" width="1600" height="1111" alt="The Story Map's constellation for The Atlas of Small Lights: characters as glowing stars joined by relationship lines, places as landmarks, a continuity panel on the left and Mara Venn's card on the right with her mentions per chapter and connections." loading="lazy" decoding="async">
+          <img class="map-frame" id="map-view-1" role="tabpanel" aria-labelledby="map-tab-1" src="assets/shots/map-storylines.jpg" width="1600" height="1111" alt="The Story Map's storylines: each character is a coloured thread moving between the Observatory, Venn and Daughter, the Tide Archive and Saltglass Point across six chapters, bundling where characters meet." loading="lazy" decoding="async">
+        </div></div>
+      </figure>
+      <div class="shell map-notes">
+        <p class="map-notes__lead" data-reveal>Continuity notes, worked out from your words. No AI needed.</p>
+        <ul class="map-notes__list">
+          <li data-reveal style="--i:1"><strong>Where did Ivo Bell go?</strong><span>Last seen three chapters ago. Bring him back, or tell the reader why.</span></li>
+          <li data-reveal style="--i:2"><strong>Wren and Odile never share a scene.</strong><span>They&rsquo;re allies, but no chapter has them together yet.</span></li>
+          <li data-reveal style="--i:3"><strong>The Lamplighter arrives late.</strong><span>A hint earlier would make the entrance feel earned.</span></li>
+        </ul>
+      </div>
+    </section>
+
     <!-- ABOUT — a book has always been words and pictures -->
     <section class="carroll">
       <div class="shell carroll-grid">
@@ -340,6 +367,7 @@ Somebody had taken the smallest light first. Type here — try @ or /</textarea>
           <p>Novely</p>
           <a href="#room">The page</a>
           <a href="#world">Your world</a>
+          <a href="#map">Story map</a>
           <a href="#ai">AI</a>
           <a href="#questions">Questions</a>
         </nav>
